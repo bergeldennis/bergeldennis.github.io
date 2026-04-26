@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GAMES</title>
+<meta name="description" content="GAMES — a new home for play. Coming soon." />
+<style>
+  :root {
+    --canvas: #0d1117;
+    --canvas-subtle: #161b22;
+    --border: #30363d;
+    --border-muted: #21262d;
+    --fg: #e6edf3;
+    --fg-muted: #8b949e;
+    --green: #3fb950;
+    --green-strong: #238636;
+    --green-hover: #2ea043;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --pink: #ff7b72;
+    --yellow: #f0883e;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--canvas);
+    color: var(--fg);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* animated grid background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border-muted) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-muted) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 80%);
+    z-index: 0;
+    animation: drift 40s linear infinite;
+  }
+
+  @keyframes drift {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 56px 56px, 56px 56px; }
+  }
+
+  /* radial green glow accent */
+  body::after {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    height: 90vw;
+    max-width: 1200px;
+    max-height: 1200px;
+    background: radial-gradient(circle, rgba(63,185,80,0.18) 0%, rgba(63,185,80,0.08) 30%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+  }
+
+  header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13, 17, 23, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--green);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    color: var(--green);
+    font-size: 14px;
+    box-shadow: 0 0 16px rgba(63,185,80,0.35);
+  }
+
+  nav {
+    display: flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+
+  nav a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  nav a:hover { color: var(--fg); }
+
+  main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 40px;
+    min-height: calc(100vh - 70px);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--canvas-subtle);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-muted);
+    margin-bottom: 32px;
+  }
+  .badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(80px, 18vw, 240px);
+    letter-spacing: -0.04em;
+    margin: 0;
+    line-height: 0.95;
+    background: linear-gradient(180deg, #e6edf3 0%, #8b949e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 80px rgba(63,185,80,0.25);
+    position: relative;
+  }
+
+  h1::after {
+    content: "_";
+    color: var(--green);
+    -webkit-text-fill-color: var(--green);
+    animation: blink 1s steps(1) infinite;
+    margin-left: 0.05em;
+    text-shadow: 0 0 20px var(--green);
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .tagline {
+    font-family: var(--mono);
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: var(--fg-muted);
+    margin-top: 24px;
+    max-width: 640px;
+  }
+  .tagline .accent { color: var(--green); }
+
+  .cta {
+    display: flex;
+    gap: 12px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--green-strong);
+    border-color: rgba(240,246,252,0.1);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--green-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(63,185,80,0.3);
+  }
+  .btn-secondary {
+    background: var(--canvas-subtle);
+    border-color: var(--border);
+    color: var(--fg);
+  }
+  .btn-secondary:hover {
+    background: #21262d;
+    border-color: #8b949e;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 80px;
+    width: 100%;
+    max-width: 880px;
+  }
+  .stat {
+    border: 1px solid var(--border);
+    background: var(--canvas-subtle);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: left;
+    transition: border-color 0.15s ease;
+  }
+  .stat:hover { border-color: var(--green); }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+  }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 8px;
+    color: var(--fg);
+  }
+  .stat-value .arrow { color: var(--green); }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-muted);
+  }
+  footer .prompt { color: var(--green); }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    nav { display: none; }
+    main { padding: 48px 20px 32px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-mark">&gt;</div>
+      <span>GAMES</span>
+    </div>
+    <nav>
+      <a href="#play">play</a>
+      <a href="#about">about</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="badge"><span class="dot"></span> system: online &middot; build 0.0.1</div>
+
+    <h1>GAMES</h1>
+
+    <p class="tagline">
+      a new <span class="accent">arcade</span> is being assembled.<br/>
+      check back soon &mdash; or don't, we'll still be here.
+    </p>
+
+    <div class="cta">
+      <a href="#play" class="btn btn-primary">▶ press start</a>
+      <a href="#about" class="btn btn-secondary">view source</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">status</div>
+        <div class="stat-value"><span class="arrow">●</span> in&nbsp;dev</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">players</div>
+        <div class="stat-value">1 / ∞</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">level</div>
+        <div class="stat-value">001</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">launch</div>
+        <div class="stat-value">soon™</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span class="prompt">$</span> hosted on github &middot; built with caffeine
+  </footer>
+</body>
+</html>
