@@ -272,6 +272,117 @@
   }
   .stat-value .arrow { color: var(--green); }
 
+  .section-label {
+    margin: 80px 0 20px;
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--fg-muted);
+  }
+  .section-label::before,
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .library {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 880px;
+  }
+  .game {
+    border: 1px solid var(--border);
+    background: var(--canvas-subtle);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: left;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .game::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .game:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(63,185,80,0.15);
+  }
+  .game:hover::before { opacity: 1; }
+
+  .game-id {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .game-id::before { content: "$"; color: var(--fg-muted); }
+
+  .game-title {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.2;
+  }
+
+  .game-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--fg-muted);
+    background: var(--canvas);
+  }
+  .chip.players { color: var(--blue); border-color: rgba(88,166,255,0.3); }
+  .chip.status  { color: var(--yellow); border-color: rgba(240,136,62,0.3); }
+
+  .game-launch {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--fg-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s ease;
+  }
+  .game:hover .game-launch { color: var(--green); }
+
   footer {
     position: relative;
     z-index: 1;
@@ -336,6 +447,30 @@
         <div class="stat-label">launch</div>
         <div class="stat-value">soon™</div>
       </div>
+    </div>
+
+    <div class="section-label">// game library</div>
+
+    <div class="library">
+      <a href="#asteroids_2player" class="game">
+        <div class="game-id">asteroids_2player</div>
+        <div class="game-title">Asteroids</div>
+        <div class="game-meta">
+          <span class="chip players">◉ 2 players</span>
+          <span class="chip status">● in dev</span>
+        </div>
+        <div class="game-launch">▶ launch &rarr;</div>
+      </a>
+
+      <a href="#dungeons_3p" class="game">
+        <div class="game-id">dungeons_3p</div>
+        <div class="game-title">Dungeons</div>
+        <div class="game-meta">
+          <span class="chip players">◉ 3 players</span>
+          <span class="chip status">● in dev</span>
+        </div>
+        <div class="game-launch">▶ launch &rarr;</div>
+      </a>
     </div>
   </main>
 
